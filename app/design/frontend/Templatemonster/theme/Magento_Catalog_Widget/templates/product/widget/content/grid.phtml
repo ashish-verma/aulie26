@@ -1,0 +1,199 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\CatalogWidget\Block\Product\ProductsList $block */
+?>
+<?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())): ?>
+<?php
+    $type = 'widget-product-grid';
+
+    $mode = 'grid';
+
+    $image = 'new_products_content_widget_grid';
+    $items = $block->getProductCollection()->getItems();
+
+    $showWishlist = true;
+    $showCompare = true;
+    $showCart = true;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+    $description = false;
+?>
+    <div class="block widget block-products-list <?= /* @noEscape */ $mode ?>">
+        <?php if ($block->getTitle()): ?>
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__($block->getTitle())) ?></strong>
+        </div>
+        <?php endif ?>
+        <div class="block-content">
+            <?= /* @noEscape */ '<!-- ' . $image . '-->' ?>
+            <div class="products-<?= /* @noEscape */ $mode ?> <?= /* @noEscape */ $mode ?>">
+                <ol class="slider product-items <?= /* @noEscape */ $type ?>">
+                    <?php $iterator = 1; ?>
+                    <?php foreach ($items as $_item): ?>
+                        <?= /* @noEscape */ ($iterator++ == 1) ? '<li class="product-item">' : '</li><li class="product-item">' ?>
+                        <div class="product-item-info">
+                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product-item-photo">
+                                <?= $block->getImage($_item, $image)->toHtml() ?>
+                            </a>
+                            <div class="product-item-details">
+                                <strong class="product-item-name">
+                                    <a title="<?= $block->escapeHtml($_item->getName()) ?>"
+                                       href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                                       class="product-item-link">
+                                        <?= $block->escapeHtml($_item->getName()) ?>
+                                    </a>
+                                </strong>
+                                <?php
+                                echo $block->getProductPriceHtml($_item, $type);
+                                ?>
+
+                                <?php if ($templateType): ?>
+                                    <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
+                                <?php endif; ?>
+
+                                <?php if ($showWishlist || $showCompare || $showCart): ?>
+                                    <div class="product-item-actions">
+                                        <?php if ($showCart): ?>
+                                            <div class="actions-primary">
+                                                <?php if ($_item->isSaleable()): ?>
+                                                    <?php if ($_item->getTypeInstance()->hasRequiredOptions($_item)): ?>
+                                                        <button class="action tocart primary" data-mage-init='{"redirectUrl":{"url":"<?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"}}' type="button" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>">
+                                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <?php
+                                                            $postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+                                                            $postData = $postDataHelper->getPostData($block->getAddToCartUrl($_item), ['product' => $_item->getEntityId()])
+                                                        ?>
+                                                        <button class="action tocart primary" data-post='<?= /* @noEscape */ $postData ?>' type="button" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>">
+                                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                <?php else: ?>
+                                                    <?php if ($_item->getIsSalable()): ?>
+                                                        <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                                    <?php else: ?>
+                                                        <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($showWishlist || $showCompare): ?>
+                                            <div class="actions-secondary" data-role="add-to-links">
+                                                <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist): ?>
+                                                    <a href="#"
+                                                       data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_item) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                                        <span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+                                                    </a>
+                                                <?php endif; ?>
+                                                <?php if ($block->getAddToCompareUrl() && $showCompare): ?>
+                                                    <?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');?>
+                                                    <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_item) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                                        <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?= ($iterator == count($items)+1) ? '</li>' : '' ?>
+                    <?php endforeach ?>
+                </ol>
+            </div>
+            <?= $block->getPagerHtml() ?>
+        </div>
+    </div>
+    <script type="text/javascript">
+        require(['jquery','js/slick'], function ($, slick) {
+            //$(document).on('ready', function() {
+                $(".widget-product-grid").slick({                   
+                    infinite: true,
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    responsive: [
+                            {
+                              breakpoint: 1024,
+                              settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1
+                              }
+                            },
+                            {
+                              breakpoint: 768,
+                              settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 1
+                              }
+                            },
+                            {
+                              breakpoint: 500,
+                              settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1
+                              }
+                            }
+                          ]
+                });
+           // });
+
+           $(window).resize(function () {
+               //console.log($(window).width());
+                $('#maincontent .column.main > div.widget').css({"width":$(window).width()});
+                $('.widget-product-grid').not('.slick-initialized').slick('resize');
+            });
+            $(window).on('orientationchange', function () {
+                $('.widget-product-grid').not('.slick-initialized').slick('resize');
+            });
+            $('#maincontent .column.main > div.widget').css({"width":$(window).width()});
+        });
+    </script>
+    <style type="text/css">
+        .slick-slider{ position: relative; display: block; box-sizing: border-box; -webkit-user-select: none;  -moz-user-select: none;  -ms-user-select: none;   user-select: none; -webkit-touch-callout: none; -khtml-user-select: none; -ms-touch-action: pan-y;  touch-action: pan-y; -webkit-tap-highlight-color: transparent;}
+        .slick-list{ position: relative; display: block; overflow: hidden; margin: 0; padding: 0;}
+        .slick-list:focus{ outline: none;}
+        .slick-list.dragging{ cursor: pointer; cursor: hand;}
+        .slick-slider .slick-track,.slick-slider .slick-list{ -webkit-transform: translate3d(0, 0, 0);  -moz-transform: translate3d(0, 0, 0);  -ms-transform: translate3d(0, 0, 0);   -o-transform: translate3d(0, 0, 0);   transform: translate3d(0, 0, 0);}
+        .slick-track{ position: relative; top: 0; left: 0; display: block; margin-left: auto; margin-right: auto;}
+        .slick-track:before,.slick-track:after{ display: table; content: '';}
+        .slick-track:after{ clear: both;}
+        .slick-loading .slick-track{ visibility: hidden;}
+        .slick-slide{ display: none; float: left; height: 100%; min-height: 1px;}
+        [dir='rtl'] .slick-slide{ float: right;}
+        .slick-slide img{ display: block;}
+        .slick-slide.slick-loading img{ display: none;}
+        .slick-slide.dragging img{ pointer-events: none;}
+        .slick-initialized .slick-slide{ display: block;}
+        .slick-loading .slick-slide{ visibility: hidden;}
+        .slick-vertical .slick-slide{ display: block; height: auto; border: 1px solid transparent;}
+        .slick-arrow.slick-hidden { display: none;}        
+        .slick-slide {  margin: 0px 20px;  float:left; }
+        .slick-prev:before, .slick-next:before {  color: black; }
+        .slick-slide {  transition: all ease-in-out .3s;   }
+        .slick-active {   }
+        .slick-current {  opacity: 1; }
+        .slick-prev,.slick-next{ font-size: 0; line-height: 0; position: absolute; top: 50%; display: block; width: 14px; height: 23px; padding: 0; cursor: pointer; color: transparent; border: none; outline: none; }
+        .slick-prev:hover,.slick-prev:focus{background-position: -14px -23px !important;}
+        .slick-next:hover,.slick-next:focus{background-position: 0px -23px !important;}
+        .slick-prev:hover,.slick-prev:focus,.slick-next:hover,.slick-next:focus{ color: transparent; outline: none; }
+        .slick-prev:hover:before,.slick-prev:focus:before,.slick-next:hover:before,.slick-next:focus:before{ opacity: 1; }
+        .slick-prev.slick-disabled:before,.slick-next.slick-disabled:before{ opacity: .25;}    
+        .slick-prev{ left: 0px; background-position: -14px 0; }
+       
+        [dir='rtl'] .slick-prev{ right: 0px; left: auto;}
+       
+        [dir='rtl'] .slick-prev:before{ content: '→';}
+        .slick-next{ right: 0px;}
+        [dir='rtl'] .slick-next{ right: auto; left: 0px;}
+        
+        [dir='rtl'] .slick-next:before{ content: '←';}
+        .slick-arrow{z-index:10;    box-shadow: none !important;
+    border: none !important;}
+    </style>
+<?php endif;?>

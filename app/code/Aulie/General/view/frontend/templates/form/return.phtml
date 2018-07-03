@@ -1,0 +1,158 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_SocialLogin
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+              
+<div id="content" class="col-sm-12">      
+    <h1>Product Returns</h1>
+    <p>Please complete the form below to request an RMA number.</p>
+    <form action="return-submit" method="post" enctype="multipart/form-data" class="form-horizontal"
+        data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'
+      >
+    <fieldset class="fieldset">
+        <legend class="legend" >Order Information</legend>
+        <div class="field form-group required">
+            <label class=" control-label label" for="input-firstname">First Name</label>
+            <div class=" control">
+                <input type="text" name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control" data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field form-group required">
+            <label class=" control-label label" for="input-lastname">Last Name</label>
+            <div class=" control">
+                <input type="text" name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control" data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field form-group required">
+            <label class=" control-label label" for="input-email">E-Mail</label>
+            <div class=" control">
+                <input type="text" name="email" value="" placeholder="E-Mail" id="input-email" class="form-control" data-validate="{required:true, 'validate-email':true}">
+            </div>
+        </div>
+        <div class="field form-group required">
+            <label class=" control-label label" for="input-telephone">Telephone</label>
+            <div class=" control">
+                <input type="text" name="telephone" value="" placeholder="Telephone" id="input-telephone" class="form-control" data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field form-group required">
+            <label class=" control-label label" for="input-order-id">Order ID</label>
+            <div class=" control">
+                <input type="text" name="order_id" value="" placeholder="Order ID" id="input-order-id" class="form-control" data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field form-group">
+            <label class="control-label label" for="input-date-ordered">Order Date</label>
+            <div class="control">
+                <div class="input-group date col-sm-3">
+                    <input type="text" name="date_ordered" value="" placeholder="Order Date" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control">
+                    <!-- <span class="input-group-btn"> <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button> </span> -->
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset">
+        <legend class="legend">Product Information &amp; Reason for Return</legend>
+            <div class="field form-group required">
+                <label class=" control-label label" for="input-product">Product Name</label>
+                <div class=" control">
+                    <input type="text" name="product" value="" placeholder="Product Name" id="input-product" class="form-control" data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="field form-group required">
+            <label class=" control-label label" for="input-model">Product Code</label>
+            <div class=" control">
+                <input type="text" name="model" value="" placeholder="Product Code" id="input-model" class="form-control" data-validate="{required:true}">
+                            </div>
+            </div>
+            <div class="field form-group">
+                <label class=" control-label label" for="input-quantity">Quantity</label>
+                <div class=" control">
+                    <input type="text" name="quantity" value="1" placeholder="Quantity" id="input-quantity" class="form-control">
+                </div>
+            </div>
+            <div class="field form-group required">
+                <label class=" control-label label">Reason for Return</label>
+                <div class=" control">
+                    <!-- <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="1" data-validate="{'validate-one-required-by-name':true}">
+                        Dead On Arrival</label>
+                    </div> -->
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="4" data-validate="{'validate-one-required-by-name':true}">
+                        Faulty, please supply details</label>
+                    </div>
+                    <!-- <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="3" data-validate="{'validate-one-required-by-name':true}">
+                        Order Error</label>
+                    </div> -->
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="5" data-validate="{'validate-one-required-by-name':true}">
+                        Other, please supply details</label>
+                    </div>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="2" data-validate="{'validate-one-required-by-name':true}">
+                        Received Wrong Item</label>
+                    </div>
+                </div>
+            </div>
+            <div class="field form-group required">
+                <label class=" control-label label">Product is opened</label>
+                <div class=" control">
+                    <label class="radio-inline">
+                        <input type="radio" name="opened" value="1">
+                        Yes</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="opened" value="0" checked="checked" >
+                        No</label>
+                </div>
+            </div>
+            <div class="field form-group">
+                <label class=" control-label label" for="input-comment">Faulty or other details</label>
+                <div class=" control">
+                    <textarea name="comment" rows="10" placeholder="Faulty or other details" id="input-comment" class="form-control"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <?php echo $block->getChildHtml('form.additional.info'); ?>
+            <div class="buttons clearfix">                
+                <div class="actions-toolbar">
+                    <input type="checkbox" name="agree" value="1" data-validate="{required:true}">&nbsp;I have read and agree to the <a href="shipping-returns" class="agree"><b>Returns Policy</b></a>
+                    <br />
+                    
+                    <div class="primary">
+                       
+                    <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
+                        <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+                    </button>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+         </form>
+    </div>
+        

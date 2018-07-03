@@ -1,0 +1,159 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$helper = $objectManager->get('Prince\PincodeChecker\Helper\Data');
+?>
+<div class="pincode-check">
+    <div id="pincode-status">
+        <!-- <h3><?php echo __("Pincode Status"); ?></h3> -->
+        <div id="pincode-avail"></div>
+    </div>
+    <div class="pincode-field">
+        <input type="button" title="<?php echo __('Check Pincode'); ?>" id="pincode-check" class="action primary" value="<?php echo __('Check'); ?>" />
+        <input type="text" id="pincode" name="pincode" <?php if($helper->getIsCheckonAddtoCart()): ?> class="required-entry" <?php endif;?> placeholder="<?php echo __('Enter Pincode'); ?>"/>
+    </div>
+</div>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <span class="counter minus">-</span>
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+                <span class="counter plus">+</span>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button">
+                <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<script>
+    require([
+    'jquery'     
+    ], function ($) {
+        $(".box-tocart .control .counter").on("click", function() {
+
+            var $button = $(this);
+            var oldValue = $button.parent().find("input").val();
+
+            if ($button.text() == "+") {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+            }
+
+            $button.parent().find("input").val(newVal);
+
+            });
+    });
+</script>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php if (!$block->isRedirectToCartEnabled() || true) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "catalogAddToCart": {
+                "bindSubmit": false
+            }
+        }
+    }
+</script>
+<?php
+//Get current product Id
+$product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');
+$id = $product->getId(); 
+
+//Get controller url
+$url = $this->getUrl('pincodechecker');
+?>
+
+<script type="text/javascript">
+    require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            buttons: [{
+                text: $.mage.__('Continue'),
+                class: '',
+                click: function () {
+                    this.closeModal();
+                }
+            }]
+        };
+
+        var popup = modal(options, $('#pincode-status'));
+
+        $(document).on('click','#pincode-check', function(){
+            var pincode = $('#pincode').val();
+            if(pincode == "")
+            {   
+                $('#pincode-avail').html('<h3 style="color:red">Please Enter Pincode<h3>');
+                $('#pincode-status').modal('openModal');
+                //alert("Please Enter Pincode");
+                return false;
+            }
+            $.ajax({
+                url: '<?php echo $url ?>',
+                async:false,
+                showLoader: true,
+                data: {id:<?php echo $id ?>,p:pincode},
+                success: function(result){
+                    $('#pincode-avail').html(result);
+                    $('#pincode-status').modal('openModal');
+                }
+            });
+        });
+
+        $('#pincode').keypress(function(e){
+            if(e.which == 13){
+                e.preventDefault();
+                $('#pincode-check').click();
+            }
+        });
+    });
+</script>
+<?php endif; ?>

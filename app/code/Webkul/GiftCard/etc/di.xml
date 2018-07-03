@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_GiftCard
+ * @author    Webkul Software Private Limited 
+ * @copyright Copyright (c) 2010-2017 Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Block\Adminhtml\Product" type="Webkul\GiftCard\Block\Adminhtml\ProductType\Product"/>
+    <!--<preference for="Magento\Sales\Model\Service\CreditmemoService" type="Webkul\GiftCard\Model\Service\CreditmemoService"/>-->
+    <preference for="Magento\Sales\Model\Order\CreditmemoFactory" type="Webkul\GiftCard\Model\Order\CreditmemoFactory"/>
+
+    <!--<type name="Magento\Sales\Model\Order\CreditmemoFactory">
+        <plugin name="Webkul_GiftCard_CreditmemoFactory" type="Webkul\GiftCard\Plugin\CreditmemoFactory" sortOrder="1" disabled="false"/>
+    </type>-->
+    <type name="Magento\Sales\Model\Service\CreditmemoService">
+        <plugin name="Webkul_GiftCard_CreditmemoService" type="Webkul\GiftCard\Plugin\CreditmemoService" sortOrder="1" disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\ProductDataProvider">
+        <plugin name="Webkul_GiftCard_ProductDataProvider" type="Webkul\GiftCard\Plugin\ProductDataProvider" sortOrder="1" disabled="false"/>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="giftcard_giftcard_listing_data_source" xsi:type="string">Webkul\GiftCard\Model\ResourceModel\GiftDetail\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Webkul\GiftCard\Model\ResourceModel\GiftDetail\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">wk_gift</argument>
+            <argument name="eventPrefix" xsi:type="string">giftcard_giftcard_listing_collection</argument>
+            <argument name="eventObject" xsi:type="string">giftcard_giftcard_listing_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Webkul\GiftCard\Model\ResourceModel\GiftDetail</argument>
+        </arguments>
+    </type>
+     <virtualType name="GiftDetailGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Webkul\GiftCard\Model\ResourceModel\GiftDetail\Grid\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">GiftDetailGridDataProvider</argument>
+        </arguments>
+    </virtualType>	
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="giftcard_giftuser_listing_data_source" xsi:type="string">Webkul\GiftCard\Model\ResourceModel\GiftUser\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Webkul\GiftCard\Model\ResourceModel\GiftUser\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">wk_giftuser</argument>
+            <argument name="eventPrefix" xsi:type="string">giftcard_giftuser_listing_collection</argument>
+            <argument name="eventObject" xsi:type="string">giftcard_giftuser_listing_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Webkul\GiftCard\Model\ResourceModel\GiftUser</argument>
+        </arguments>
+    </type>
+     <virtualType name="GiftUserDetailGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Webkul\GiftCard\Model\ResourceModel\GiftUser\Grid\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">GiftUserDetailGridDataProvider</argument>
+        </arguments>
+    </virtualType>
+</config>

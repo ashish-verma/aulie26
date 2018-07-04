@@ -13136,3 +13136,9 @@ div#newsletter-error{color:#fff}
 #minicart-content-wrapper .block-content img.sad_image{width:50px; 
 	display: block;
    margin: 0 auto;}
+
+   img.about_us_aulie {
+    float: none;
+    width: 90%;
+    margin-right: 0;
+}

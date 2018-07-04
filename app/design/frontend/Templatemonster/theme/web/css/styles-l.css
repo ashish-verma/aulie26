@@ -5394,3 +5394,9 @@ width: 80px;
 #minicart-content-wrapper .block-content img.sad_image{width:50px; 
 	display: block;
    margin: 0 auto;}
+
+img.about_us_aulie {
+	float: left; 
+	width: 260px; 
+	margin-right: 10px;
+}

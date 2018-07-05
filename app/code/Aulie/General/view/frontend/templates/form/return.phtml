@@ -22,7 +22,7 @@
               
 <div id="content" class="col-sm-12">      
     <h1>Product Returns</h1>
-    <p>Please complete the form below to request an RMA number.</p>
+    <p>Please complete the form below to request for return (check our return policy in <a href="<?php echo $this->getUrl('customer-service');?>" target="_blank"><b>Customer Service</b></a> before submitting your return request).</p>
     <form action="return-submit" method="post" enctype="multipart/form-data" class="form-horizontal"
         data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
       data-mage-init='{"validation":{}}'
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="field form-group required">
-            <label class=" control-label label" for="input-telephone">Telephone</label>
+            <label class=" control-label label" for="input-telephone">Mobile Number</label>
             <div class=" control">
                 <input type="text" name="telephone" value="" placeholder="Telephone" id="input-telephone" class="form-control" data-validate="{required:true}">
             </div>
@@ -59,11 +59,11 @@
                 <input type="text" name="order_id" value="" placeholder="Order ID" id="input-order-id" class="form-control" data-validate="{required:true}">
             </div>
         </div>
-        <div class="field form-group">
+        <div class="field form-group required order_date">
             <label class="control-label label" for="input-date-ordered">Order Date</label>
             <div class="control">
                 <div class="input-group date col-sm-3">
-                    <input type="text" name="date_ordered" value="" placeholder="Order Date" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control">
+                    <input type="text" name="date_ordered" value="" placeholder="Order Date" data-date-format="YYYY-MM-DD" id="input-date-ordered" class="form-control" data-validate="{required:true}">
                     <!-- <span class="input-group-btn"> <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button> </span> -->
                 </div>
             </div>
@@ -71,12 +71,7 @@
     </fieldset>
     <fieldset class="fieldset">
         <legend class="legend">Product Information &amp; Reason for Return</legend>
-            <div class="field form-group required">
-                <label class=" control-label label" for="input-product">Product Name</label>
-                <div class=" control">
-                    <input type="text" name="product" value="" placeholder="Product Name" id="input-product" class="form-control" data-validate="{required:true}">
-                </div>
-            </div>
+           
             <div class="field form-group required">
             <label class=" control-label label" for="input-model">Product Code</label>
             <div class=" control">
@@ -92,30 +87,35 @@
             <div class="field form-group required">
                 <label class=" control-label label">Reason for Return</label>
                 <div class=" control">
-                    <!-- <div class="radio">
+                    <div class="radio">
                     <label>
                         <input type="radio" name="return_reason_id" value="1" data-validate="{'validate-one-required-by-name':true}">
-                        Dead On Arrival</label>
-                    </div> -->
+                        Product not as described</label>
+                    </div>
                     <div class="radio">
                     <label>
                         <input type="radio" name="return_reason_id" value="4" data-validate="{'validate-one-required-by-name':true}">
-                        Faulty, please supply details</label>
+                        Damaged goods</label>
                     </div>
-                    <!-- <div class="radio">
+                    <div class="radio">
                     <label>
                         <input type="radio" name="return_reason_id" value="3" data-validate="{'validate-one-required-by-name':true}">
-                        Order Error</label>
-                    </div> -->
+                        Shipping method</label>
+                    </div>
                     <div class="radio">
                     <label>
                         <input type="radio" name="return_reason_id" value="5" data-validate="{'validate-one-required-by-name':true}">
-                        Other, please supply details</label>
+                        Quality issue</label>
                     </div>
                     <div class="radio">
                     <label>
                         <input type="radio" name="return_reason_id" value="2" data-validate="{'validate-one-required-by-name':true}">
-                        Received Wrong Item</label>
+                        Received wrong item</label>
+                    </div>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="return_reason_id" value="2" data-validate="{'validate-one-required-by-name':true}">
+                        Any other reason please give detail</label>
                     </div>
                 </div>
             </div>
@@ -136,6 +136,8 @@
                     <textarea name="comment" rows="10" placeholder="Faulty or other details" id="input-comment" class="form-control"></textarea>
                 </div>
             </div>
+
+            <p>We will notify you via e-mail/mobile to process and track your return request.</p>
         </fieldset>
         <?php echo $block->getChildHtml('form.additional.info'); ?>
             <div class="buttons clearfix">                
@@ -144,13 +146,13 @@
                     <br />
                     
                     <div class="primary">
-                       
-                    <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
-                        <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
-                    </button>
+                        <br />  
+                        <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
+                            <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+                        </button>
                     </div>
-                    <br />
-                    <br />
+                    
+                    <br /><br /><br /><br />
                 </div>
             </div>
          </form>

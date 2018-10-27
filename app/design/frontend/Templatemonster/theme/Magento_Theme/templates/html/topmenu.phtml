@@ -16,6 +16,19 @@
 ?>
 <?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
 <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$baseUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+?>
+<div class="my-account-icon">
+    <span>MA</span>
+    <ul class="myaccountlink">
+        <li><a href="<?php echo $baseUrl; ?>customer/account/login">Log In</a></li>
+        <li> | </li>
+        <li><a href="<?php echo $baseUrl; ?>customer/account/create">Sign Up</a></li>
+    </ul>
+</div>
 
 <nav class="navigation" data-action="navigation">
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
@@ -23,6 +36,14 @@
         <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
     </ul>
     <ul id="more-menu" >
-        <li class="level0"><a href="./about" class="level-top">About Us</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>gift-cards.html" class="level-top giftcard">Gift Card</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>about" class="level-top about">About Us</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>customer/account" class="level-top account">My Account</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>sales/order/history" class="level-top myorders">My Orders</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>checkout/cart" class="level-top mycart">My Cart</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>faq" class="level-top faq">FAQs</a></li>
+        <li class="level0"><a href="https://www.facebook.com/aulieestore" class="level-top share" target="_blank">Share The Love</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>ddiy" class="level-top ddiy">DDIY</a></li>
+        <li class="level0"><a href="<?php echo $baseUrl; ?>contact" class="level-top contact">Contact Us</a></li>
     </ul>
 </nav>

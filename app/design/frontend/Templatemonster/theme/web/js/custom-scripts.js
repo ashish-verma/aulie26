@@ -144,6 +144,24 @@ define([
         $('#product-options-wrapper .field').show();
     }
 
+
+    var scrollTrigger = 300,
+    backToTop = function () {
+       // var scrollTop = $(window).scrollBottom();
+        //console.log(scrollTop);   
+        //if (scrollTop == scrollTrigger) {
+        if ($(window).scrollTop()   >  $(document).height() - $(window).height() - scrollTrigger) {
+           //console.log(scrollTop);    
+           if($(".product-list-actions button.action.secondary").is(":visible")){       
+                $(".product-list-actions button.action.secondary").trigger('click');
+           }
+        } 
+    };
+
+    $(window).on('scroll', function () {
+        backToTop();
+    });
+    
 });
 
 

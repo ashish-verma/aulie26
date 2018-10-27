@@ -4287,8 +4287,8 @@ display: none
 display: inline-block
 }
 .products-grid .product-item-actions .actions-primary + .actions-secondary {
-width: 70%;
-min-width: 115px
+width: 50%;
+min-width: 100px
 }
 }
 .catalog-category-view .products-grid:after {
@@ -4299,7 +4299,8 @@ min-width: 115px
 	clear: both;
 	height: 0
 }
-.catalog-category-view .products-grid .product-item {
+.catalog-category-view .products-grid .product-item,
+.catalogsearch-result-index .products-grid .product-item {
 	display: block;
 	width: 33%;
 	float: left;
@@ -5370,8 +5371,8 @@ margin-left: 5px;
 	float: right;
   margin-right: 15px;}
 .about-links-menu_btn a{
-    width: 27px;
-    height: 27px;
+    width: 32px;
+    height: 32px;
     display: block;
     background: url(../images/bulb.png) no-repeat center center;
     text-indent: -999em;
@@ -5402,3 +5403,24 @@ img.about_us_aulie {
 }
 
 .order_date .input-group.date{padding-left:0px}
+
+.product-info-main .product-info-price .normal-price span.price-label{display:none !important}
+.product-info-main .product-info-price .old-price span.price-label{display:none}
+.product-info-main .product-info-price .old-price{text-decoration:line-through}
+
+.products-grid .product-list-actions{clear:both}
+span.loader-img{
+    background: url(../images/spinner.gif) no-repeat center center;
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: 0 auto;
+}
+
+.product-list-actions button.secondary{
+    background: #e91d25;
+    color: #fff;
+    box-shadow: inset 0 1px 0 0 #e91d25, inset 0 -1px 0 0 rgba(232, 52, 52, 0.3);
+    margin: 0 auto;
+    display: block;
+}

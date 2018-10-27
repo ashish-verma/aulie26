@@ -20,7 +20,7 @@ class Save extends \Magento\Backend\App\Action
         \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
     ) {
         $this->dataPersistor = $dataPersistor;
-        parent::__construct($context, $coreRegistry);
+        parent::__construct($context);
     }
 
     /**

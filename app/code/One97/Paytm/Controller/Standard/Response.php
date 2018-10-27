@@ -9,6 +9,12 @@ class Response extends \One97\Paytm\Controller\Paytm
     {	
 		//$_POST=   ['ORDERID' => '000000006','MID' => 'Pearl209382576527767','TXNID' => '20180414111212800110168826700015448','TXNAMOUNT' => '10.00','PAYMENTMODE' => 'PPI','CURRENCY' => 'INR','TXNDATE' => '2018-04-14 08:48:40.0','STATUS' => 'TXN_SUCCESS','RESPCODE' => '01','RESPMSG' => 'Txn Success','GATEWAYNAME' => 'WALLET','BANKTXNID' => '','BANKNAME' => 'WALLET','CHECKSUMHASH' => '5BJqIKb3ILRBqpRX4HtwBWHsFd7g6Bt4dnIR/L8d0Usy8afYVm9kTJYJKj4/+xeNnuStlRdNebony2WD64WsLpZIiYZZvzkDzv/d2lnvGlE='];
 		//$this->getRequest()->setParams($_POST);
+
+			//$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			//$webkulObserver = $objectManager->create('Webkul\GiftCard\Observer\AfterInvoiceGeneration');		
+			//$webkulObserver->sendGiftCard('000001045');
+			//echo'sdfsd';die;
+
 		$comment = "";
         $request = $_POST;
 		if(!empty($_POST)){
@@ -85,6 +91,9 @@ class Response extends \One97\Paytm\Controller\Paytm
         $order->save();
 		if($successFlag){
 			$this->messageManager->addSuccess( __('Paytm transaction has been successful.') );
+			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			$webkulObserver = $objectManager->create('Webkul\GiftCard\Observer\AfterInvoiceGeneration');		
+			$webkulObserver->sendGiftCard($orderId);
 		}else{
 			$this->messageManager->addError( __($errorMsg) );
 		}

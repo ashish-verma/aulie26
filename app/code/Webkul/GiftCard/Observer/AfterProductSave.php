@@ -48,7 +48,7 @@ class AfterProductSave implements ObserverInterface
                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                 $emailCustomOption = $objectManager->create('Magento\Catalog\Api\Data\ProductCustomOptionInterface');
                 $messageCustomOption = $objectManager->create('Magento\Catalog\Api\Data\ProductCustomOptionInterface');
-                $emailCustomOption->setTitle('Email To')
+                $emailCustomOption->setTitle('To')
                              ->setType('field')
                              ->setIsRequire(true)
                              ->setSortOrder(0)

@@ -462,7 +462,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function createExpirationDateOfGiftCard($days, $date)
     {
             $date = strtotime("+".$days." days", strtotime($date));
-            return  date("Y-m-d h:i:s", $date);
+            return  date("d-m-Y h:i:s", $date);
     }
 
     /**

@@ -17,9 +17,16 @@ require(
     ], function($){
     $(document).ready(function(){
         if ('<?php echo $productType; ?>' == 'giftcard') {
-            $("span:contains('Email To')").each(function(index){
-                $(this).parent().next('div').find('input').attr('data-validate',"{required:true, 'validate-email':true}");
+            $("span:contains('To')").each(function(index){
+                var inputs = $(this).parent().next('div').find('input');
+                inputs.attr('data-validate',"{required:true, 'validate-email':true}");
+                inputs.attr('placeholder',"Enter recipient's email address");
+                
+                inputs.after('<p class="note">Make sure you\'ve got the right email!</p>');
             });
+                        
+            $("textarea.product-custom-option").attr('placeholder',"Hope you enjoy this Aulie's egift card!");
+            
         }
     });
 });

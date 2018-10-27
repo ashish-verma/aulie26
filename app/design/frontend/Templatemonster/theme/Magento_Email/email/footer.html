@@ -17,10 +17,15 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p><a href="#">{{trans "About Us"}}</a></p>
-                                    <p><a href="#">{{trans "Customer Service"}}</a></p>
+                                    <p>
+                                        Share your stories and beautiful pictures with us on -
+                                        <br>
+                                        <a href="https://www.facebook.com/aulieestore" target="_blank"><img src="{{media url="wysiwyg/facebook.png"}}" alt=""  width="35px"/></a>
+                                        <a href="https://www.instagram.com/aulieestore" target="_blank"><img src="{{media url="wysiwyg/instagram.png"}}" alt="" width="35px" />
+                                        </a>  <a href="https://www.twitter.com" target="_blank"><img src="{{media url="wysiwyg/twitter.png"}}" alt="" width="35px" /></a>
+                                    </p>
                                 </td>
-                                <td>
+                                <!--td>
                                     {{depend store_phone}}
                                         <p class="phone">
                                             {{trans '<a href="tel:%store_phone">%store_phone</a>' store_phone=$store_phone |raw}}
@@ -31,9 +36,9 @@
                                             {{trans 'Hours of Operation:<br /><span class="no-link">%store_hours</span>.' store_hours=$store_hours |raw}}
                                         </p>
                                     {{/depend}}
-                                </td>
+                                </td-->
                                 <td>
-                                    <p class="address">
+                                    <p class="address" style="text-align:right">
                                         {{var store.getFormattedAddress()|raw}}
                                     </p>
                                 </td>
